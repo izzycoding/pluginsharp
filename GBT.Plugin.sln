@@ -1,0 +1,52 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GBT.Plugin.Core", "GBT.Plugin.Core\GBT.Plugin.Core.csproj", "{E2EF4106-7287-42D5-B111-D4491327BAF8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GBT.Plugin.Demo.App", "GBT.Plugin.Demo.App\GBT.Plugin.Demo.App.csproj", "{F568A794-7EFB-4B64-B9A0-E96EFD2C4696}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GBT.Plugin.Demo.Core", "GBT.Plugin.Demo.Core\GBT.Plugin.Demo.Core.csproj", "{D090C3F6-5ECB-4A84-A1E0-2EEDCCAC8273}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GBT.Plugin.Demo.FirstPlugin", "GBT.Plugin.Demo.FirstPlugin\GBT.Plugin.Demo.FirstPlugin.csproj", "{D6FDA6E7-1E7F-4E92-ADC1-D679EE729743}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F568A794-7EFB-4B64-B9A0-E96EFD2C4696} = {F568A794-7EFB-4B64-B9A0-E96EFD2C4696}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GBT.Plugin.Demo.SecondPlugin", "GBT.Plugin.Demo.SecondPlugin\GBT.Plugin.Demo.SecondPlugin.csproj", "{8A681759-FC90-431B-BB1C-B6B07AA81035}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F568A794-7EFB-4B64-B9A0-E96EFD2C4696} = {F568A794-7EFB-4B64-B9A0-E96EFD2C4696}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E2EF4106-7287-42D5-B111-D4491327BAF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2EF4106-7287-42D5-B111-D4491327BAF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2EF4106-7287-42D5-B111-D4491327BAF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2EF4106-7287-42D5-B111-D4491327BAF8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F568A794-7EFB-4B64-B9A0-E96EFD2C4696}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F568A794-7EFB-4B64-B9A0-E96EFD2C4696}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F568A794-7EFB-4B64-B9A0-E96EFD2C4696}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F568A794-7EFB-4B64-B9A0-E96EFD2C4696}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D090C3F6-5ECB-4A84-A1E0-2EEDCCAC8273}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D090C3F6-5ECB-4A84-A1E0-2EEDCCAC8273}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D090C3F6-5ECB-4A84-A1E0-2EEDCCAC8273}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D090C3F6-5ECB-4A84-A1E0-2EEDCCAC8273}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6FDA6E7-1E7F-4E92-ADC1-D679EE729743}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6FDA6E7-1E7F-4E92-ADC1-D679EE729743}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6FDA6E7-1E7F-4E92-ADC1-D679EE729743}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6FDA6E7-1E7F-4E92-ADC1-D679EE729743}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A681759-FC90-431B-BB1C-B6B07AA81035}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A681759-FC90-431B-BB1C-B6B07AA81035}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A681759-FC90-431B-BB1C-B6B07AA81035}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A681759-FC90-431B-BB1C-B6B07AA81035}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
