@@ -8,18 +8,49 @@ namespace GBT.Plugin.Core
     {
         public PluginAttribute(Type t)
         {
-            foreach (var @interface in t.GetInterfaces())
-            {
-                if (!Plugins.ContainsKey(@interface.FullName))
-                {
-                    Plugins.Add(@interface.FullName, new List<Type>());
-                }
-                Plugins[@interface.FullName].Add(t);
-            }
+            RegisterInterfaces(t, t);
+            RegisterBaseInterfaces(t, t);
+            RegisterInterface(t.FullName, t);
             Type = t;
         }
 
         public Type Type { get; }
+
+        #region regestration methods
+
+        private static void RegisterInterfaces(Type @base, Type type)
+        {
+            foreach (var @interface in @base.GetInterfaces())
+            {
+                RegisterInterface(@interface.FullName, type);
+                RegisterBaseInterfaces(@interface, type);
+            }
+        }
+
+        private static void RegisterInterface(string interfaceName, Type type)
+        {
+            if (!Plugins.ContainsKey(interfaceName))
+            {
+                Plugins.Add(interfaceName, new List<Type>());
+            }
+            if (!Plugins[interfaceName].Contains(type))
+            {
+                Plugins[interfaceName].Add(type);
+            }
+        }
+
+        private static void RegisterBaseInterfaces(Type parent, Type type)
+        {
+            while (true)
+            {
+                var @base = parent.BaseType;
+                if (@base == null) return;
+                RegisterInterfaces(@base, type);
+                parent = @base;
+            }
+        }
+
+        #endregion
 
         #region static members
 
