@@ -1,4 +1,3 @@
-﻿using System;
 using System.Linq;
 using System.Windows.Forms;
 using GBT.Plugin.Core;
@@ -11,6 +10,14 @@ namespace GBT.Plugin.Demo.App
         public InfoScreen()
         {
             InitializeComponent();
+            RefreshPluginLists();
+            PluginLoader.PluginLoaded += PluginLoaded;
+            // ToDo: add timer to copy a third plugin into the plugins directory to test dynamic loading
+        }
+
+        private void PluginLoaded(object sender, PluginLoaderEventArgs args)
+        {
+            MessageBox.Show(this, $"A new plugin was loaded.\n{args.AssemblyInfo.Name}", @"Dynamic Plugin", MessageBoxButtons.OK, MessageBoxIcon.Information);
             RefreshPluginLists();
         }
 
