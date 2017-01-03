@@ -47,16 +47,16 @@ namespace GBT.Plugin.Core
         private static void AssemblyInitializer(object sender, AssemblyLoadEventArgs e)
         {
             // force load of all types that are decorated with PluginAttribute
-            // ReSharper disable once UnusedVariable
             var loadedPlugins = e.LoadedAssembly.GetTypes()
-                .Where(t => t.IsClass && !t.IsAbstract && t.IsPublic)
-                .Select(t => t.GetCustomAttribute<PluginAttribute>())
+                .Where(t => t.IsClass && !t.IsAbstract && t.IsPublic && t.GetCustomAttribute<PluginAttribute>() != null)
                 .ToList();
+
+            // register loaded assembly to avoid it being loaded again
             var pluginPath = e.LoadedAssembly.Location;
             LoadedAssemblies.Add(pluginPath);
 
             // Notify user of dynamically loaded plugins
-            if (_isInitialized) { PluginLoaded?.Invoke(sender, new PluginLoaderEventArgs(pluginPath)); }
+            if (_isInitialized) { PluginLoaded?.Invoke(sender, new PluginLoaderEventArgs(pluginPath, loadedPlugins)); }
         }
 
         private static void LoadFromDirectory(string directory, string searchPattern = DefaultSearchPattern)
