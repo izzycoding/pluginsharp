@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace GBT.Plugin.Core
 {
@@ -31,7 +33,7 @@ namespace GBT.Plugin.Core
         {
             if (!Plugins.ContainsKey(interfaceName))
             {
-                Plugins.Add(interfaceName, new List<Type>());
+                while (!Plugins.TryAdd(interfaceName, new ConcurrentBag<Type>())) { }
             }
             if (!Plugins[interfaceName].Contains(type))
             {
@@ -46,6 +48,7 @@ namespace GBT.Plugin.Core
                 var @base = parent.BaseType;
                 if (@base == null) return;
                 RegisterInterfaces(@base, type);
+
                 parent = @base;
             }
         }
@@ -54,7 +57,7 @@ namespace GBT.Plugin.Core
 
         #region static members
 
-        public static readonly Dictionary<string, List<Type>> Plugins = new Dictionary<string, List<Type>>();
+        public static readonly ConcurrentDictionary<string, ConcurrentBag<Type>> Plugins = new ConcurrentDictionary<string, ConcurrentBag<Type>>();
 
         public static IEnumerable<Type> GetPlugins<T>() => GetPlugins(typeof(T));
         public static IEnumerable<Type> GetPlugins(Type type) => GetPlugins(type.FullName);
