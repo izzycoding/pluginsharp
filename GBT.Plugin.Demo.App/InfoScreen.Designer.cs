@@ -1,4 +1,4 @@
-﻿namespace GBT.Plugin.DemoApp
+﻿namespace GBT.Plugin.Demo.App
 {
     partial class InfoScreen
     {

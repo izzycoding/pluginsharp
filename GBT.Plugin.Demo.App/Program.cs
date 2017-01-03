@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 using GBT.Plugin.Core;
 
-namespace GBT.Plugin.DemoApp
+namespace GBT.Plugin.Demo.App
 {
     internal static class Program
     {

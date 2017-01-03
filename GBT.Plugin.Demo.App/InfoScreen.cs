@@ -4,7 +4,7 @@ using GBT.Plugin.Core;
 using GBT.Plugin.Demo.Core;
 using static GBT.Plugin.Core.PluginAttribute;
 
-namespace GBT.Plugin.DemoApp
+namespace GBT.Plugin.Demo.App
 {
     public partial class InfoScreen : Form
     {
