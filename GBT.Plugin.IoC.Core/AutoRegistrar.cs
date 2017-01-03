@@ -4,20 +4,20 @@ using GBT.Plugin.Core;
 
 namespace GBT.Plugin.IoC.Core
 {
-    public static class AutoRegistra
+    public static class AutoRegistrar
     {
         public static void Configure(IContainer container)
         {
-            Registra = container;
+            Registrar = container;
             PluginLoader.PluginLoaded += PluginHandler;
         }
 
-        private static IContainer Registra { get; set; }
+        private static IContainer Registrar { get; set; }
 
         private static void PluginHandler(object sender, PluginLoaderEventArgs e)
         {
             e.LoadedPluginTypes
-                .Select(t => t.GetCustomAttribute<AutoRegisterAttribute>())
+                .SelectMany(t => t.GetCustomAttributes<AutoRegisterAttribute>())
                 .ToList()
                 .ForEach(ActionRegistration);
         }
@@ -28,18 +28,18 @@ namespace GBT.Plugin.IoC.Core
             switch (attribute.RegistrationType)
             {
                 case RegistrationType.Direct:
-                    var registerMethod = Registra.GetType()
+                    var registerMethod = Registrar.GetType()
                         .GetMethods(BindingFlags.Public | BindingFlags.Instance)
                         .First(m => m.Name == "Register")
                         .MakeGenericMethod(attribute.Interface, attribute.Type);
-                    registerMethod.Invoke(Registra, null);
+                    registerMethod.Invoke(Registrar, new object[] { attribute.InstanceType });
                     break;
                 case RegistrationType.Factory:
-                    var registerFactoryMethod = Registra.GetType()
+                    var registerFactoryMethod = Registrar.GetType()
                         .GetMethods(BindingFlags.Public | BindingFlags.Instance)
                         .First(m => m.Name == "RegisterFactory")
                         .MakeGenericMethod(attribute.Interface);
-                    registerFactoryMethod.Invoke(Registra, new object[] { attribute.FactoryFunc });
+                    registerFactoryMethod.Invoke(Registrar, new object[] { attribute.FactoryFunc });
                     break;
             }
         }

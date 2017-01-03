@@ -2,7 +2,7 @@
 
 namespace GBT.Plugin.IoC.Core
 {
-    [AttributeUsage(AttributeTargets.Class)]
+    [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
     public class AutoRegisterAttribute : Attribute
     {
         public Type Interface { get; }

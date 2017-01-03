@@ -5,7 +5,10 @@ namespace GBT.Plugin.IoC.Core
 {
     public interface IContainer
     {
-        void Register<TI, TC>();
-        void RegisterFactory<TI>(Func<IEnumerable<TI>, TI> factoryFunc);
+        void Register<TI, TC>(InstanceType lifestyle = InstanceType.Singleton)
+            where TI : class
+            where TC : TI;
+        void RegisterFactory<TI>(Func<IEnumerable<Type>, Type> factoryFunc)
+            where TI : class;
     }
 }

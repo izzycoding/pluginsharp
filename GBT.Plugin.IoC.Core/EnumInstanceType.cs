@@ -4,6 +4,9 @@
     {
         Singleton
         , Transient
-        //, Session
+        , PerThread
+        , PerWebRequest
+        , Pooled
+        , Scoped
     }
 }
