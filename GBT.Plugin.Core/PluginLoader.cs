@@ -1,14 +1,18 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 
 namespace GBT.Plugin.Core
 {
-    public class PluginLoader
+    public static class PluginLoader
     {
         private const string DefaultSearchPattern = "*.dll";
+        
+        private static readonly ConcurrentBag<string> LoadedAssemblies = new ConcurrentBag<string>();
 
         public static void RegisterPlugins(AppDomain domain, params string[] directoryPaths)
         {
@@ -29,10 +33,7 @@ namespace GBT.Plugin.Core
         {
             domain.AssemblyLoad += AssemblyInitializer;
 
-            foreach (var path in directoryPaths)
-            {
-                LoadFromDirectory(Path.Combine(path, "Plugins"), searchPattern);
-            }
+            Parallel.ForEach(directoryPaths, path => LoadFromDirectory(Path.Combine(path, "Plugins"), searchPattern));
         }
 
         private static void AssemblyInitializer(object sender, AssemblyLoadEventArgs args)
@@ -43,6 +44,8 @@ namespace GBT.Plugin.Core
                 .Where(t => t.IsClass && !t.IsAbstract && t.IsPublic)
                 .Select(t => t.GetCustomAttribute<PluginAttribute>())
                 .ToList();
+            var pluginPath = args.LoadedAssembly.Location;
+            LoadedAssemblies.Add(pluginPath);
         }
 
         private static void LoadFromDirectory(string directory, string searchPattern = DefaultSearchPattern)
@@ -54,10 +57,13 @@ namespace GBT.Plugin.Core
         {
             if (!directory.Exists) return;
 
-            foreach (var plugin in directory.GetFiles(searchPattern))
-            {
-                Assembly.LoadFrom(plugin.FullName);
-            }
+            Parallel.ForEach(directory.GetFiles(searchPattern), plugin => LoadPlugin(plugin.FullName));
+        }
+
+        private static void LoadPlugin(string filePath)
+        {
+            if (LoadedAssemblies.Any(x => x == filePath)) return;
+            Assembly.LoadFrom(filePath);
         }
     }
 }
